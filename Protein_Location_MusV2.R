@@ -7,35 +7,35 @@ PathName <- getwd() ## Set output directroy
 RVersion = "20210421V1"
 dir.create(paste0(PathName,"/",RVersion))
 
-datatext <- read.table(paste0(PathName,"/mouse_compartment_textmining_full.tsv"),  # 資料檔名
-                      header=F,          # 資料中的第一列，作為欄位名稱
-                      sep="\t")           # 將逗號視為分隔符號來讀取資料
-
-datainte <- read.table(paste0(PathName,"/mouse_compartment_integrated_full.tsv"),  # 資料檔名 
-                      header=F,          # 資料中的第一列，作為欄位名稱
-                      sep="\t")           # 將逗號視為分隔符號來讀取資料
-dataknow <- read.table(paste0(PathName,"/mouse_compartment_knowledge_full.tsv"),  # 資料檔名
-                       header=F,          # 資料中的第一列，作為欄位名稱
-                       sep="\t")           # 將逗號視為分隔符號來讀取資料
-
-# Test
-subcellular <- read.csv(paste0(PathName,"/subcellular2.csv"),header = F)  # 資料檔名
-    #                   header=F,          # 資料中的第一列，作為欄位名稱
-     #                  sep=",")           # 將逗號視為分隔符號來讀取資料
-subcellular2 <- read.table(paste0(PathName,"/subcellular2.csv"),  # 資料檔名
-                           header=F,          # 資料中的第一列，作為欄位名稱
-                           sep=",")           # 將逗號視為分隔符號來讀取資料
-subcellular3 <- read.delim(paste0(PathName,"/subcellular2.csv"),  # 資料檔名
-                       header=F,          # 資料中的第一列，作為欄位名稱
-                       sep=",")           # 將逗號視為分隔符號來讀取資料
-# Test
+# datatext <- read.table(paste0(PathName,"/mouse_compartment_textmining_full.tsv"),  # 資料檔名
+#                       header=F,          # 資料中的第一列，作為欄位名稱
+#                       sep="\t")           # 將逗號視為分隔符號來讀取資料
+# 
+# datainte <- read.table(paste0(PathName,"/mouse_compartment_integrated_full.tsv"),  # 資料檔名 
+#                       header=F,          # 資料中的第一列，作為欄位名稱
+#                       sep="\t")           # 將逗號視為分隔符號來讀取資料
+# dataknow <- read.table(paste0(PathName,"/mouse_compartment_knowledge_full.tsv"),  # 資料檔名
+#                        header=F,          # 資料中的第一列，作為欄位名稱
+#                        sep="\t")           # 將逗號視為分隔符號來讀取資料
+# 
+# # Test
+# subcellular <- read.csv(paste0(PathName,"/subcellular2.csv"),header = F)  # 資料檔名
+#     #                   header=F,          # 資料中的第一列，作為欄位名稱
+#      #                  sep=",")           # 將逗號視為分隔符號來讀取資料
+# subcellular2 <- read.table(paste0(PathName,"/subcellular2.csv"),  # 資料檔名
+#                            header=F,          # 資料中的第一列，作為欄位名稱
+#                            sep=",")           # 將逗號視為分隔符號來讀取資料
+# subcellular3 <- read.delim(paste0(PathName,"/subcellular2.csv"),  # 資料檔名
+#                        header=F,          # 資料中的第一列，作為欄位名稱
+#                        sep=",")           # 將逗號視為分隔符號來讀取資料
+# # Test
 ### !!! https://stackoverflow.com/questions/12828438/read-csv-vs-read-table
 datainte2 <- read.delim(paste0(PathName,"/mouse_compartment_integrated_full.tsv"),  # 資料檔名 
                        header=F,          # 資料中的第一列，作為欄位名稱
                        sep="\t")           # 將逗號視為分隔符號來讀取資料
 
 
-datainte <- subcellular[,c(-5,-6)]
+# datainte <- subcellular[,c(-5,-6)]
 datainte <- datainte2
 # datainte <- dataknow[,c(-5,-6)]
 # datainte <- datatext
@@ -82,7 +82,7 @@ write.table(datainte_cyto4, file=paste0(PathName,"/",RVersion,"/cyto_Mus.csv"),
 datainte_extra <- datainte[datainte[,5] >= 2,]
 datainte_extra2_1 <- datainte_extra[grepl("extracellular", datainte_extra[,4], ignore.case=TRUE),]
 datainte_extra2 <- datainte_extra2_1[!grepl("exosome", datainte_extra2_1[,4], ignore.case=TRUE),]
-datainte_extra2 <- datainte_extra2_1[!grepl("vesicle", datainte_extra2_1[,4], ignore.case=TRUE),]
+datainte_extra2 <- datainte_extra2[!grepl("vesicle", datainte_extra2[,4], ignore.case=TRUE),]
 datainte_extra2 <- datainte_extra2[!grepl("mmu-miR-", datainte_extra2[,2], ignore.case=TRUE),]
 
 datainte_extra3 <- datainte_extra2[ ,c(2,5)]
@@ -123,7 +123,7 @@ write.table(CytoGene5, file=paste0(PathName,"/",RVersion,"/CytoGene_Mus_SYMBOL.c
 #library(readxl)
 # Error# FNkdGenelise <- read_excel(paste0(PathName,"/FNkd unique.xlsx"), sheet = "工作表1")
 
-FNkdGenelise <- read.csv(paste0(PathName,"/",RVersion,"/FNkd unique.csv"),header = T)  # 資料檔名
+FNkdGenelise <- read.csv(paste0(PathName,"/FNkd unique.csv"),header = T)  # 資料檔名
 FNkdExoGene  <- as.vector(as.matrix(FNkdGenelise[,1]))
 FNkdExoGene2 <- AnnotationDbi::select(org.Mm.eg.db, keys=FNkdExoGene, columns='ENSEMBL', keytype='SYMBOL') 
 FNkdExoGene3 <- FNkdExoGene2[!is.na(FNkdExoGene2$ENSEMBL), ]
